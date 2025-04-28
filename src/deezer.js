@@ -1,7 +1,6 @@
 "use strict";
 
 const util = require("node:util");
-const fs = require("node:fs/promises");
 const { request } = require("./request");
 
 const API_URL = "https://www.deezer.com/ajax/gw-light.php";
@@ -23,7 +22,12 @@ class Deezer {
 
   async getToken() {
     if (this.__token === undefined) {
-      this.__token = (async () => (await this.apiCall("deezer.getUserData", ""))["USER_TOKEN"])();
+      this.__token = (async () => {
+        const data = await this.apiCall("deezer.getUserData", "");
+        // const fs = require("node:fs/promises");
+        // await fs.writeFile("temp/dump-getUserData.json", JSON.stringify(data, null, 2) + "\n");
+        return data["USER_TOKEN"];
+      })();
     }
     return this.__token;
   }
@@ -51,10 +55,9 @@ class Deezer {
   }
 
   async getFavoriteTracks() {
-    const favorites = await this.apiCall("favorite.getFavoriteTracks");
-
-    await fs.writeFile("temp/dump-getUserData.json", JSON.stringify(bla, null, 2) + "\n");
     console.log("getFavoriteTracks");
+    const favorites = await this.apiCall("favorite.getFavoriteTracks");
+    const i = 0;
   }
 }
 
