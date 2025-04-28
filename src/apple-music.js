@@ -1,8 +1,12 @@
 "use strict";
 
-const getLocalTracks = async () => {};
+const getLocalTracks = async () => {
+  console.log("getLocalTracks");
+};
 
-const updatePlaylist = async () => {};
+const updatePlaylist = async () => {
+  console.log("updatePlaylist");
+};
 
 module.exports = {
   getLocalTracks,

@@ -1,6 +1,8 @@
 "use strict";
 
-const getFavoriteTracks = async () => {};
+const getFavoriteTracks = async () => {
+  console.log("getFavoriteTracks");
+};
 
 module.exports = {
   getFavoriteTracks,
