@@ -1,0 +1,13 @@
+---
+root: true
+#  https://eslint.org/docs/rules/
+env:
+  node: true
+  es2022: true
+extends:
+  - "eslint:recommended"
+  - prettier
+rules:
+  strict: [error]
+  no-console: [off]
+  no-constant-condition: [error, { checkLoops: false }]
