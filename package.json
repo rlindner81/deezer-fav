@@ -1,6 +1,6 @@
 {
   "name": "deezer-fav",
-  "description": "deezer-fav",
+  "description": "This cli tool will read your deezer favorites and update a dedicated playlist in your local Apple Music.",
   "version": "1.0.0",
   "bin": {
     "deezer-fav": "bin/cli.js"
