@@ -2,6 +2,7 @@
 
 const util = require("node:util");
 const { request } = require("./request");
+const fs = require("node:fs/promises");
 
 const API_URL = "https://www.deezer.com/ajax/gw-light.php";
 
@@ -24,8 +25,6 @@ class Deezer {
     if (this.__userData === undefined) {
       this.__userData = (async () => {
         const data = await this.apiCall("deezer.getUserData", { token: "" });
-        // const fs = require("node:fs/promises");
-        // await fs.writeFile("temp/dump-getUserData.json", JSON.stringify(data, null, 2) + "\n");
         return data;
       })();
     }
@@ -58,14 +57,24 @@ class Deezer {
 
   async getFavoriteTracks() {
     console.log("getFavoriteTracks");
-    const body = JSON.stringify({
-      playlist_id: (await this.getUserData())["USER"]["LOVEDTRACKS_ID"],
-      start: 0,
-      nb: 10000,
-    });
-    const favorites = await this.apiCall("playlist.getSongs", { body });
-    // const favorites = await this.apiCall("song.getFavoriteIds");
-    const i = 0;
+    // const body = JSON.stringify({
+    //   playlist_id: (await this.getUserData())["USER"]["LOVEDTRACKS_ID"],
+    //   start: 0,
+    //   nb: 10000,
+    // });
+    // const favorites = await this.apiCall("playlist.getSongs", { body });
+    // const fs = require("node:fs/promises");
+    // await fs.writeFile("temp/dump-favorites.json", JSON.stringify(favorites, null, 2) + "\n");
+    const fs = require("node:fs/promises");
+    const { data: favoritesInfo } = JSON.parse(await fs.readFile("temp/dump-favorites.json", "utf8"));
+
+    const favorites = favoritesInfo.map((info) => ({
+      artist: info["ART_NAME"],
+      title: info["SNG_TITLE"],
+      album: info["ALB_TITLE"],
+      trackNumber: info["TRACK_NUMBER"],
+    }));
+    return favorites;
   }
 }
 
