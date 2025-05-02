@@ -1,6 +1,9 @@
 "use strict";
 
 const urllib = require("url");
+const { default: fetchCookie } = require("fetch-cookie");
+
+const fetchWithCookies = fetchCookie(fetch);
 
 const request = async ({
   // https://nodejs.org/docs/latest-v10.x/api/url.html
@@ -62,7 +65,7 @@ const request = async ({
   };
 
   const startTime = Date.now();
-  const response = await fetch(_url, _options);
+  const response = await fetchWithCookies(_url, _options);
   if (logged) {
     console.log(`${_method} ${_url} ${response.status} ${response.statusText} (${Date.now() - startTime}ms)`);
   }
